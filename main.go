@@ -41,7 +41,7 @@ func main() {
         // Do something with a packet here.
 				pac := packet.String()
 				fmt.Println(packet)
-        fmt.Println(strings.Contains(pac, "RST=false"))
+        fmt.Println(strings.Contains(pac, "RST=true"))
 				if strings.Contains(pac, "RST=true") {
 
 						docker.Stop()

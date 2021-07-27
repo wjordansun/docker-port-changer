@@ -39,7 +39,7 @@ func main() {
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
     for packet := range packetSource.Packets() {
 				pac := packet.String()
-				fmt.Println(packet)
+				//fmt.Println(packet)
         fmt.Println(strings.Contains(pac, "RST=true"))
 				if strings.Contains(pac, "RST=true") {
 

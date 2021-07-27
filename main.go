@@ -38,13 +38,13 @@ func main() {
 
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
     for packet := range packetSource.Packets() {
-        // Do something with a packet here.
 				pac := packet.String()
 				fmt.Println(packet)
         fmt.Println(strings.Contains(pac, "RST=true"))
 				if strings.Contains(pac, "RST=true") {
 
-						docker.Stop()
+						go docker.Stop()
+						time.Sleep(1 * time.Second)
 
             docker.Start()
         }

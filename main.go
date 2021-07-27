@@ -43,8 +43,8 @@ func main() {
         fmt.Println(strings.Contains(pac, "RST=true"))
 				if strings.Contains(pac, "RST=true") {
 
-						go docker.Stop()
-						time.Sleep(1 * time.Second)
+						docker.Stop()
+				
 
             docker.Start()
         }

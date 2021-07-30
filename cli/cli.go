@@ -13,8 +13,8 @@ func RunCommand(commandStr string) error {
 	switch arrCommandStr[0] {
 	case "list":
 		packet.OpenFile()
-	case "ports":
-		
+	//case "ports":
+
 	case "exit":
 		os.Exit(0)
 	case "quit":

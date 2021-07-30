@@ -5,26 +5,38 @@ import (
 	"os/exec"
 )
 
-func Add() {
-	cmd := exec.Command("ipfs", "add", "test.pcap")
+func Add(fileName string) string{
+	cmd := exec.Command("ipfs", "add", fileName)
   stdout, err := cmd.Output()
 
 	if err != nil {
     fmt.Println(err.Error())
-    return
+    return err.Error()
   } else {
-    fmt.Println(string(stdout))
+    return string(stdout)
   }
 }
 
-func Cat(CID string) {
-	cmd := exec.Command("ipfs", "cat", CID)
+func Cat(CID string) string{
+	cmd := exec.Command("ipfs", "cat", CID, ">", "sample.pcap")
   stdout, err := cmd.Output()
 
 	if err != nil {
     fmt.Println(err.Error())
-    return
+    return err.Error()
   } else {
-    fmt.Println(string(stdout))
+    return string(stdout)
   }
 }
+
+// func ipfsToPcap(output string) {
+// 	cmd := exec.Command("ipfs", "cat", CID)
+//   stdout, err := cmd.Output()
+
+// 	if err != nil {
+//     fmt.Println(err.Error())
+//     return err.Error()
+//   } else {
+//     return string(stdout)
+//   }
+// }

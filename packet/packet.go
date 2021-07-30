@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"portchanger/docker"
+	"portchanger/ipfs"
 	"strings"
 	"time"
 
@@ -24,34 +25,32 @@ var (
     handle       		*pcap.Handle
 		packetCount	 	 	int = 0
 		packetsPerFile	int = 100
-		pcapFile				string  = "test.pcap"
+		pcapFile				string  = "sample.pcap"
+		CID 						string = ""
 )
 
-func writeFile(packet gopacket.Packet) {
-	// Open output pcap file and write header 
-	f, _ := os.Create("test.pcap")
-	w := pcapgo.NewWriter(f)
-	w.WriteFileHeader(snapshotLen, layers.LinkTypeEthernet)
-	defer f.Close()
+func writeFile(packet gopacket.Packet, w *pcapgo.Writer) {
 
 	w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
 	packetCount++
 
 	if packetCount > packetsPerFile {
-
+		CID = ipfs.Add(pcapFile)
+		os.Exit(0)
 	}
 }
 
-func openFile() {
-	handle, err = pcap.OpenOffline(pcapFile)
-    if err != nil { log.Fatal(err) }
-    defer handle.Close()
+func OpenFile() {
 
-    // Loop through packets in file
-    packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
-    for packet := range packetSource.Packets() {
-        fmt.Println(packet)
-    }
+	handle, err = pcap.OpenOffline(pcapFile)
+  if err != nil { log.Fatal(err) }
+  defer handle.Close()
+
+  // Loop through packets in file
+  packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+  for packet := range packetSource.Packets() {
+    fmt.Println(packet)
+  }
 }
 
 func Listen() {
@@ -61,6 +60,12 @@ func Listen() {
         log.Fatal(err)
     }
     defer handle.Close()
+
+		// Open output pcap file and write header 
+		f, _ := os.Create("test.pcap")
+		w := pcapgo.NewWriter(f)
+		w.WriteFileHeader(snapshotLen, layers.LinkTypeEthernet)
+		defer f.Close()
 
     // Set filter
     // var filter string = "tcp and port 8080"
@@ -75,11 +80,10 @@ func Listen() {
 				pac := packet.String()
 				//fmt.Println(packet)
         //fmt.Println(strings.Contains(pac, "RST=true"))
+				writeFile(packet, w)
 				if strings.Contains(pac, "RST=true") {
 
 					fmt.Println(packet)
-
-					writeFile(packet)
 					
 					docker.Stop()
 

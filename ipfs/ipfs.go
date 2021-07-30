@@ -17,6 +17,14 @@ func Add() {
   }
 }
 
-func Cat() {
-	
+func Cat(CID string) {
+	cmd := exec.Command("ipfs", "cat", CID)
+  stdout, err := cmd.Output()
+
+	if err != nil {
+    fmt.Println(err.Error())
+    return
+  } else {
+    fmt.Println(string(stdout))
+  }
 }

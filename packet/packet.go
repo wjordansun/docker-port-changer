@@ -15,14 +15,16 @@ import (
 )
 
 var (
-    device       string = "docker0"
-    snapshot_len int32  = 1024
-		snapshotLen  uint32 = 1024
-    promiscuous  bool   = false
-    err          error
-    timeout      time.Duration = 1 * time.Second
-    handle       *pcap.Handle
-		packetCount	 int = 0
+    device       		string = "docker0"
+    snapshot_len 		int32  = 1024
+		snapshotLen  		uint32 = 1024
+    promiscuous  		bool   = false
+    err          		error
+    timeout      		time.Duration = 1 * time.Second
+    handle       		*pcap.Handle
+		packetCount	 	 	int = 0
+		packetsPerFile	int = 100
+		pcapFile				string  = "test.pcap"
 )
 
 func writeFile(packet gopacket.Packet) {
@@ -35,9 +37,21 @@ func writeFile(packet gopacket.Packet) {
 	w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
 	packetCount++
 
-	if packetCount > 100 {
-		
+	if packetCount > packetsPerFile {
+
 	}
+}
+
+func openFile() {
+	handle, err = pcap.OpenOffline(pcapFile)
+    if err != nil { log.Fatal(err) }
+    defer handle.Close()
+
+    // Loop through packets in file
+    packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+    for packet := range packetSource.Packets() {
+        fmt.Println(packet)
+    }
 }
 
 func Listen() {

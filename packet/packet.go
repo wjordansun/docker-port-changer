@@ -3,22 +3,42 @@ package packet
 import (
 	"fmt"
 	"log"
+	"os"
 	"portchanger/docker"
 	"strings"
 	"time"
 
 	"github.com/google/gopacket"
+	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
+	"github.com/google/gopacket/pcapgo"
 )
 
 var (
     device       string = "docker0"
     snapshot_len int32  = 1024
+		snapshotLen  uint32 = 1024
     promiscuous  bool   = false
     err          error
     timeout      time.Duration = 1 * time.Second
     handle       *pcap.Handle
+		packetCount	 int = 0
 )
+
+func writeFile(packet gopacket.Packet) {
+	// Open output pcap file and write header 
+	f, _ := os.Create("test.pcap")
+	w := pcapgo.NewWriter(f)
+	w.WriteFileHeader(snapshotLen, layers.LinkTypeEthernet)
+	defer f.Close()
+
+	w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
+	packetCount++
+
+	if packetCount > 100 {
+		
+	}
+}
 
 func Listen() {
     // Open device
@@ -44,6 +64,8 @@ func Listen() {
 				if strings.Contains(pac, "RST=true") {
 
 					fmt.Println(packet)
+
+					writeFile(packet)
 					
 					docker.Stop()
 

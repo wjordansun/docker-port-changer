@@ -2,15 +2,17 @@ package cli
 
 import (
 	"os"
-	"os/exec"
+	"portchanger/bannerusage"
 	"portchanger/packet"
 	"strings"
 )
 
-func RunCommand(commandStr string) error {
+func RunCommand(commandStr string) {
 	commandStr = strings.TrimSuffix(commandStr, "\n")
 	arrCommandStr := strings.Fields(commandStr)
 	switch arrCommandStr[0] {
+	case "help":
+		bannerusage.Print()
 	case "list":
 		packet.OpenFile()
 	//case "ports":
@@ -20,8 +22,8 @@ func RunCommand(commandStr string) error {
 	case "quit":
 		os.Exit(0)
 	}
-	cmd := exec.Command(arrCommandStr[0], arrCommandStr[1:]...)
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
-	return cmd.Run()
+	// cmd := exec.Command(arrCommandStr[0], arrCommandStr[1:]...)
+	// cmd.Stderr = os.Stderr
+	// cmd.Stdout = os.Stdout
+	// return cmd.Run()
 }

@@ -4,11 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"portchanger/bannerusage"
 	"portchanger/cli"
 )
 
 func main() {
 	//packet.Listen()
+	bannerusage.Print()
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		fmt.Print("Safehouse> ")
@@ -16,7 +18,7 @@ func main() {
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		}
-		err = cli.RunCommand(cmdString)
+		cli.RunCommand(cmdString)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		}

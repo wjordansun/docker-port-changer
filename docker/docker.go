@@ -8,11 +8,12 @@ import (
 
 var (
 	port int = 3000
-	containerName string = ""
+	containerName string = "test"
+	startConatiner string = "test2"
 )
 
 func Stop() {
-  cmd := exec.Command("docker", "stop", "test")
+  cmd := exec.Command("docker", "stop", containerName)
   stdout, err := cmd.Output()
 
 	if err != nil {
@@ -24,7 +25,7 @@ func Stop() {
 }
 
 func Start() {
-	cmd := exec.Command("docker", "start", "test2")
+	cmd := exec.Command("docker", "start", startConatiner)
   stdout, err := cmd.Output()
 
 	if err != nil {

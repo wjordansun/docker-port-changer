@@ -3,6 +3,12 @@ package docker
 import (
 	"fmt"
 	"os/exec"
+	"strconv"
+)
+
+var (
+	port int = 3000
+	containerName string = ""
 )
 
 func Stop() {
@@ -41,8 +47,8 @@ func Build(imageName string) {
   }
 }
 
-func Run(containerName, imageName string) {
-	cmd := exec.Command("docker", "run", "-d", "--name", containerName, "-p", "8000:9999", imageName)
+func Run(containerName, imageName string, port int) {
+	cmd := exec.Command("docker", "run", "-d", "--name", containerName, "-p", strconv.Itoa(port) + ":9999", imageName)
   stdout, err := cmd.Output()
 
 	if err != nil {

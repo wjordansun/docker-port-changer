@@ -8,11 +8,10 @@ import (
 
 var (
 	port int = 3000
-	containerName string = "test"
-	startConatiner string = "test2"
+	initSuccess bool = false
 )
 
-func Stop() {
+func Stop(containerName string) {
   cmd := exec.Command("docker", "stop", containerName)
   stdout, err := cmd.Output()
 
@@ -24,8 +23,8 @@ func Stop() {
   }
 }
 
-func Start() {
-	cmd := exec.Command("docker", "start", startConatiner)
+func Start(containerName string) {
+	cmd := exec.Command("docker", "start", containerName)
   stdout, err := cmd.Output()
 
 	if err != nil {
@@ -58,4 +57,14 @@ func Run(containerName, imageName string, port int) {
   } else {
     fmt.Println(string(stdout))
   }
+}
+
+func Init() {
+	if initSuccess {
+		return
+	} else {
+		Run("production1", "app", 3000)
+		Run("honeypot1", "app", 4000)
+		initSuccess = true
+	}
 }

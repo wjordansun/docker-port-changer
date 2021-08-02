@@ -3,6 +3,7 @@ package cli
 import (
 	"os"
 	"portchanger/bannerusage"
+	"portchanger/docker"
 	"portchanger/packet"
 	"strings"
 )
@@ -16,7 +17,10 @@ func RunCommand(commandStr string) {
 	case "list":
 		packet.OpenFile()
 	//case "ports":
-
+	case "start":
+		packet.Listen()
+	case "init":
+		docker.Init()
 	case "exit":
 		os.Exit(0)
 	case "quit":

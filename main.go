@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	//packet.Listen()
 	bannerusage.Print()
 	reader := bufio.NewReader(os.Stdin)
 	for {

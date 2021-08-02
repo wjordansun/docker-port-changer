@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/google/gopacket"
-	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
 	"github.com/google/gopacket/pcapgo"
 )
@@ -64,10 +63,10 @@ func Listen() {
     defer handle.Close()
 
 		// Open output pcap file and write header 
-		f, _ := os.Create("test.pcap")
-		w := pcapgo.NewWriter(f)
-		w.WriteFileHeader(snapshotLen, layers.LinkTypeEthernet)
-		defer f.Close()
+		// f, _ := os.Create("test.pcap")
+		// w := pcapgo.NewWriter(f)
+		// w.WriteFileHeader(snapshotLen, layers.LinkTypeEthernet)
+		// defer f.Close()
 
     // Set filter
     // var filter string = "tcp and port 8080"
@@ -82,7 +81,7 @@ func Listen() {
 				pac := packet.String()
 				//fmt.Println(packet)
         //fmt.Println(strings.Contains(pac, "RST=true"))
-				writeFile(packet, w)
+				//writeFile(packet, w)
 				if strings.Contains(pac, "RST=true") {
 
 					fmt.Println(packet)

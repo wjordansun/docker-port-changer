@@ -79,7 +79,7 @@ func Listen() {
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
     for packet := range packetSource.Packets() {
 				pac := packet.String()
-				//fmt.Println(packet)
+				fmt.Println(packet)
         //fmt.Println(strings.Contains(pac, "RST=true"))
 				//writeFile(packet, w)
 				if strings.Contains(pac, "RST=true") {

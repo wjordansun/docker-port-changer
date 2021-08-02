@@ -27,6 +27,8 @@ var (
 		packetsPerFile	int = 100
 		pcapFile				string  = "sample.pcap"
 		CID 						string = ""
+		ProductionNum		int	= 1
+		honeypot3				bool = false
 )
 
 func writeFile(packet gopacket.Packet, w *pcapgo.Writer) {
@@ -84,11 +86,33 @@ func Listen() {
 				if strings.Contains(pac, "RST=true") {
 
 					fmt.Println(packet)
+					switch ProductionNum {
+					case 1:
+						if honeypot3 {
+							docker.Stop("honeypot3")
+						} else {
+							docker.Stop("production1")
+         	 		docker.Start("honeypot1")
+							docker.Start("production2")
+							ProductionNum = 2
+						}
+					case 2:
+						docker.Stop("production2")
+						docker.Stop("honeypot1")
+          	docker.Start("honeypot2")
+						docker.Start("production3")
+						ProductionNum = 3
+					case 3:
+						docker.Stop("production3")
+						docker.Stop("honeypot2")
+          	docker.Start("honeypot3")
+						docker.Start("production1")
+						honeypot3 = true
+						ProductionNum = 1
+					}
 					
-					docker.Stop("test")
 
-          docker.Start("test2")
-        }
+				}
     }
 
 }

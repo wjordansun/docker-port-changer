@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	port int = 3000
+	//port int = 3000
 	initSuccess bool = false
 )
 
@@ -61,10 +61,29 @@ func Run(containerName, imageName string, port int) {
 
 func Init() {
 	if initSuccess {
+		fmt.Println("already initialized.")
 		return
 	} else {
+		Run("honeypot", "app", 4000)
 		Run("production1", "app", 3000)
-		Run("honeypot1", "app", 4000)
+
+		Run("production2", "app", 3010)
+		Stop("producition2")
+
+		Run("production3", "app", 3020)
+		Stop("producition3")
+
+		Run("honeypot1", "app", 3000)
+		Stop("honeypot1")
+
+		Run("honeypot2", "app", 3010)
+		Stop("honeypot2")
+
+		Run("honeypot3", "app", 3020)
+		Stop("honeypot3")
+
+		fmt.Println("done initializing.")
+
 		initSuccess = true
 	}
 }

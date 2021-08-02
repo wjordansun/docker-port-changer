@@ -5,6 +5,7 @@ import (
 	"portchanger/bannerusage"
 	"portchanger/docker"
 	"portchanger/packet"
+	"portchanger/ports"
 	"strings"
 )
 
@@ -16,7 +17,8 @@ func RunCommand(commandStr string) {
 		bannerusage.Print()
 	case "list":
 		packet.OpenFile()
-	//case "ports":
+	case "ports":
+		ports.Display()
 	case "start":
 		packet.Listen()
 	case "init":

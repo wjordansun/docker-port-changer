@@ -81,29 +81,21 @@ func Init() {
 		Run("production1", "app", 3000)
 
 		Run("production2", "app", 3010)
-		time.Sleep(2 * time.Second)
 		Stop("producition2")
-		time.Sleep(5 * time.Second)
 
 		Run("production3", "app", 3020)
-		time.Sleep(2 * time.Second)
 		Stop("producition3")
-		time.Sleep(5 * time.Second)
 
 		Run("honeypot1", "app", 3000)
-		time.Sleep(2 * time.Second)
 		Stop("honeypot1")
-		time.Sleep(5 * time.Second)
 
 		Run("honeypot2", "app", 3010)
-		time.Sleep(2 * time.Second)
 		Stop("honeypot2")
-		time.Sleep(5 * time.Second)
 
 		Run("honeypot3", "app", 3020)
-		time.Sleep(2 * time.Second)
 		Stop("honeypot3")
-		time.Sleep(5 * time.Second)
+
+		Reset()
 
 		fmt.Println("done initializing.")
 
@@ -116,5 +108,9 @@ func Reset() {
 	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")
-	fmt.Println("Reset complete.")
+	if !initSuccess {
+		return
+	} else {
+		fmt.Println("Reset complete.")
+	}
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 	"strconv"
+	"time"
 )
 
 var (
@@ -13,6 +14,18 @@ var (
 
 func Stop(containerName string) {
   cmd := exec.Command("docker", "stop", containerName)
+  stdout, err := cmd.Output()
+
+	if err != nil {
+    fmt.Println(err.Error())
+    return
+  } else {
+    fmt.Println(string(stdout))
+  }
+}
+
+func stopAll() {
+	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
   stdout, err := cmd.Output()
 
 	if err != nil {
@@ -68,22 +81,35 @@ func Init() {
 		Run("production1", "app", 3000)
 
 		Run("production2", "app", 3010)
+		time.Sleep(2 * time.Second)
 		Stop("producition2")
 
 		Run("production3", "app", 3020)
+		time.Sleep(2 * time.Second)
 		Stop("producition3")
 
 		Run("honeypot1", "app", 3000)
+		time.Sleep(2 * time.Second)
 		Stop("honeypot1")
 
 		Run("honeypot2", "app", 3010)
+		time.Sleep(2 * time.Second)
 		Stop("honeypot2")
 
 		Run("honeypot3", "app", 3020)
+		time.Sleep(2 * time.Second)
 		Stop("honeypot3")
 
 		fmt.Println("done initializing.")
 
 		initSuccess = true
 	}
+}
+
+func Reset() {
+	stopAll()
+	time.Sleep(2 * time.Second)
+	Start("production1")
+	Start("honeypot")
+	fmt.Println("Reset complete.")
 }

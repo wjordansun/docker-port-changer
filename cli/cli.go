@@ -23,6 +23,8 @@ func RunCommand(commandStr string) {
 		packet.Listen()
 	case "init":
 		docker.Init()
+	case "reset":
+		docker.Reset()
 	case "exit":
 		os.Exit(0)
 	case "quit":

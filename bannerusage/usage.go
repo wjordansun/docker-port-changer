@@ -11,6 +11,7 @@ Commands:
 		start -- start watching packets
 		list -- display log files
 		ports -- show what ports are open and which ones are honeypots
+		reset -- Reset docker containers to production1 on 3000 and honeypot on 4000
 		exit/quit -- exit the shell
 	`
 )

@@ -25,7 +25,7 @@ func Stop(containerName string) {
 }
 
 func stopAll() {
-	cmd := exec.Command("docker", "stop", "$(docker", "ps", "-a", "-q)")
+	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
   stdout, err := cmd.Output()
 
 	if err != nil {

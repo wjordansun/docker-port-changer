@@ -94,6 +94,7 @@ func Listen() {
          	 		docker.Start("honeypot1")
 							docker.Start("production2")
 							ProductionNum = 2
+							os.Exit(0)
 						}
 					case 2:
 						docker.Stop("production2")

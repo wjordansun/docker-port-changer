@@ -34,6 +34,14 @@ func StopAll() {
   } else {
     fmt.Println(string(stdout))
   }
+	Stop("production1")
+	Stop("production2")
+	Stop("production3")
+	Stop("honeypot1")
+	Stop("honeypot2")
+	Stop("honeypot3")
+	Stop("honeypot")
+
 }
 
 func Start(containerName string) {

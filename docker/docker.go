@@ -24,7 +24,7 @@ func Stop(containerName string) {
   }
 }
 
-func stopAll() {
+func StopAll() {
 	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
   stdout, err := cmd.Output()
 
@@ -104,7 +104,7 @@ func Init() {
 }
 
 func Reset() {
-	stopAll()
+	StopAll()
 	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")

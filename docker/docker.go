@@ -105,7 +105,7 @@ func Init() {
 
 func Reset() {
 	stopAll()
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")
 	fmt.Println("Reset complete.")

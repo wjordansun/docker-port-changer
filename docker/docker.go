@@ -41,7 +41,8 @@ func StopAll() {
 	Stop("honeypot2")
 	Stop("honeypot3")
 	Stop("honeypot")
-
+	fmt.Println("Im being run.")
+	
 }
 
 func Start(containerName string) {

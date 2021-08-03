@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 	"strconv"
+	"time"
 )
 
 var (
@@ -104,6 +105,7 @@ func Init() {
 
 func Reset() {
 	stopAll()
+	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")
 	fmt.Println("Reset complete.")

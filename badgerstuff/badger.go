@@ -1,6 +1,7 @@
 package badgerstuff
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -9,7 +10,7 @@ import (
 
 var (
 	DBpath string = "./tmp/data"
-	val []byte
+	value []byte
 )
 
 func DBexists(path string) bool {
@@ -26,11 +27,21 @@ func Init() {
 	Handle(err)
 	defer db.Close()
 	
-	txn := db.NewTransaction(true) // Read-write txn
-	err = txn.SetEntry(badger.NewEntry([]byte("initSuccess"), []byte("true")))
-	Handle(err)
+	// txn := db.NewTransaction(true) // Read-write txn
+	// err = txn.SetEntry(badger.NewEntry([]byte("initSuccess"), []byte("true")))
+	// Handle(err)
 
-	err = txn.Commit()
+	// err = txn.Commit()
+	// Handle(err)
+
+	err = db.Update(func(txn *badger.Txn) error {
+		if _, err := txn.Get([]byte("initSuccess")); err == badger.ErrKeyNotFound { //database has not been created yet
+			err = txn.Set([]byte("initSuccess"), []byte("true"))
+			fmt.Println("database created.")
+			return err
+		}
+		return err
+	})
 	Handle(err)
 }
 
@@ -40,18 +51,31 @@ func InitSuccess() bool {
 	Handle(err)
 	defer db.Close()
 
+	// err = db.View(func(txn *badger.Txn) error {
+	// 	item, err := txn.Get([]byte("initSuccess"))
+	// 	Handle(err)
+	// 	val, err = item.ValueCopy(nil)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	return nil
+	// })
+	// Handle(err)
+
 	err = db.View(func(txn *badger.Txn) error {
 		item, err := txn.Get([]byte("initSuccess"))
 		Handle(err)
-		val, err = item.ValueCopy(nil)
-		if err != nil {
+		err = item.Value(func(val []byte) error {
+			value = append([]byte{}, val...)
 			return err
-		}
+		})
+
 		return nil
 	})
 	Handle(err)
+	
 
-	if string(val) == "true" {
+	if string(value) == "true" {
 		return true
 	} else {
 		return false

@@ -88,7 +88,10 @@ func Init() {
 		return
 	} else {
 		Run("honeypot", "app", 4000)
+		Stop("honeypot")
+
 		Run("production1", "app", 3000)
+		Stop("production1")
 
 		Run("production2", "app", 3010)
 		Stop("producition2")
@@ -105,7 +108,8 @@ func Init() {
 		Run("honeypot3", "app", 3020)
 		Stop("honeypot3")
 
-		Reset()
+		Start("honeypot")
+		Start("production1")
 
 		fmt.Println("done initializing.")
 
@@ -126,7 +130,7 @@ func Reset() {
   }
 
 	fmt.Println("Im being run.")
-	
+
 	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")

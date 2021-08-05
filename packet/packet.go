@@ -80,7 +80,7 @@ func Listen() {
 		reader := bufio.NewReader(os.Stdin)
 		
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
-		
+
 		Loop:
     	for packet := range packetSource.Packets() {
 				cmdString, err := reader.ReadString('\n')
@@ -101,12 +101,14 @@ func Listen() {
 					case 1:
 						if honeypot3 {
 							docker.Stop("honeypot3")
+							docker.Stop("production1")
+         	 		docker.Start("honeypot1")
+							docker.Start("production2")
 						} else {
 							docker.Stop("production1")
          	 		docker.Start("honeypot1")
 							docker.Start("production2")
 							ProductionNum = 2
-							os.Exit(0)
 						}
 					case 2:
 						docker.Stop("production2")

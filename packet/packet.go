@@ -82,8 +82,9 @@ func Listen() {
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
     for packet := range packetSource.Packets() {
 				cmdString, err := reader.ReadString('\n')
+				commandStr := strings.TrimSuffix(cmdString, "\n")
 				badgerstuff.Handle(err)
-				if cmdString == "^C" {
+				if commandStr == "^C" {
 					continue
 				}
 

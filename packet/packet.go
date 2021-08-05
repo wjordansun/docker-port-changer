@@ -84,7 +84,7 @@ func Listen() {
 				cmdString, err := reader.ReadString('\n')
 				commandStr := strings.TrimSuffix(cmdString, "\n")
 				badgerstuff.Handle(err)
-				if commandStr == "^C" {
+				if commandStr == "q" {
 					continue
 				}
 

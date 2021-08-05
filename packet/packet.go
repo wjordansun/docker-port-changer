@@ -80,12 +80,14 @@ func Listen() {
 		reader := bufio.NewReader(os.Stdin)
 		
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
-    for packet := range packetSource.Packets() {
+		
+		Loop:
+    	for packet := range packetSource.Packets() {
 				cmdString, err := reader.ReadString('\n')
 				commandStr := strings.TrimSuffix(cmdString, "\n")
 				badgerstuff.Handle(err)
 				if commandStr == "q" {
-					continue
+					break Loop
 				}
 
 				pac := packet.String()

@@ -42,7 +42,7 @@ func StopAll() {
 	Stop("honeypot2")
 	Stop("honeypot3")
 	Stop("honeypot")
-	fmt.Println("Im being run.")
+	//fmt.Println("Im being run.")
 
 }
 
@@ -120,7 +120,7 @@ func Init() {
 func Reset() {
 	StopAll()
 
-	fmt.Println("Im being run.")
+	//fmt.Println("Im being run.")
 
 	time.Sleep(2 * time.Second)
 	Start("production1")

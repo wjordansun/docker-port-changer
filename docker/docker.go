@@ -3,13 +3,14 @@ package docker
 import (
 	"fmt"
 	"os/exec"
+	"portchanger/badgerstuff"
 	"strconv"
 	"time"
 )
 
 var (
 	//port int = 3000
-	initSuccess bool = false
+	//initSuccess bool = false
 )
 
 func Stop(containerName string) {
@@ -42,7 +43,7 @@ func StopAll() {
 	Stop("honeypot3")
 	Stop("honeypot")
 	fmt.Println("Im being run.")
-	
+
 }
 
 func Start(containerName string) {
@@ -82,7 +83,7 @@ func Run(containerName, imageName string, port int) {
 }
 
 func Init() {
-	if initSuccess {
+	if badgerstuff.DBexists(badgerstuff.DBpath) && badgerstuff.InitSuccess(){
 		fmt.Println("already initialized.")
 		return
 	} else {
@@ -108,12 +109,24 @@ func Init() {
 
 		fmt.Println("done initializing.")
 
-		initSuccess = true
+		badgerstuff.Init()
 	}
 }
 
 func Reset() {
-	StopAll()
+	//StopAll()
+	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
+  stdout, err := cmd.Output()
+
+	if err != nil {
+    fmt.Println(err.Error())
+    return
+  } else {
+    fmt.Println(string(stdout))
+  }
+
+	fmt.Println("Im being run.")
+	
 	time.Sleep(2 * time.Second)
 	Start("production1")
 	Start("honeypot")

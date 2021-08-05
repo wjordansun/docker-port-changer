@@ -26,15 +26,15 @@ func Stop(containerName string) {
 }
 
 func StopAll() {
-	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
-  stdout, err := cmd.Output()
+	// cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
+  // stdout, err := cmd.Output()
 
-	if err != nil {
-    fmt.Println(err.Error())
-    return
-  } else {
-    fmt.Println(string(stdout))
-  }
+	// if err != nil {
+  //   fmt.Println(err.Error())
+  //   return
+  // } else {
+  //   fmt.Println(string(stdout))
+  // }
 	Stop("production1")
 	Stop("production2")
 	Stop("production3")
@@ -118,16 +118,7 @@ func Init() {
 }
 
 func Reset() {
-	//StopAll()
-	cmd := exec.Command("docker", "kill", "$(docker", "ps", "-q)")
-  stdout, err := cmd.Output()
-
-	if err != nil {
-    fmt.Println(err.Error())
-    return
-  } else {
-    fmt.Println(string(stdout))
-  }
+	StopAll()
 
 	fmt.Println("Im being run.")
 

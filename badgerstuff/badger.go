@@ -8,8 +8,11 @@ import (
 	"github.com/dgraph-io/badger"
 )
 
+const (
+	DBpath = "./tmp/data"
+)
+
 var (
-	DBpath string = "./tmp/data"
 	value []byte
 )
 

@@ -94,10 +94,10 @@ func Init() {
 		Stop("production1")
 
 		Run("production2", "app", 3010)
-		Stop("producition2")
+		Stop("production2")
 
 		Run("production3", "app", 3020)
-		Stop("producition3")
+		Stop("production3")
 
 		Run("honeypot1", "app", 3000)
 		Stop("honeypot1")

@@ -123,5 +123,7 @@ func Reset() {
 
 	time.Sleep(2 * time.Second)
 	Start("production1")
+	badgerstuff.SetProductionNum(1)
 	fmt.Println("Reset complete.")
+
 }

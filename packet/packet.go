@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"portchanger/badgerstuff"
 	"portchanger/docker"
 	"portchanger/ipfs"
 	"strings"
@@ -26,7 +27,6 @@ var (
 		packetsPerFile	int = 100
 		pcapFile				string  = "sample.pcap"
 		CID 						string = ""
-		ProductionNum		int	= 1
 		honeypot3				bool = false
 )
 
@@ -96,7 +96,7 @@ func Listen() {
 				if strings.Contains(pac, "RST=true") {
 
 					fmt.Println(packet)
-					switch ProductionNum {
+					switch badgerstuff.ProductionNum() {
 					case 1:
 						if honeypot3 {
 							docker.Stop("honeypot3")
@@ -107,21 +107,21 @@ func Listen() {
 							docker.Stop("production1")
          	 		docker.Start("honeypot1")
 							docker.Start("production2")
-							ProductionNum = 2
+							badgerstuff.SetProductionNum(2)
 						}
 					case 2:
 						docker.Stop("production2")
 						docker.Stop("honeypot1")
           	docker.Start("honeypot2")
 						docker.Start("production3")
-						ProductionNum = 3
+						badgerstuff.SetProductionNum(3)
 					case 3:
 						docker.Stop("production3")
 						docker.Stop("honeypot2")
           	docker.Start("honeypot3")
 						docker.Start("production1")
 						honeypot3 = true
-						ProductionNum = 1
+						badgerstuff.SetProductionNum(1)
 					}
 					
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/dgraph-io/badger"
 )
@@ -14,6 +15,8 @@ const (
 
 var (
 	value []byte
+	productionNum []byte
+	prodNum int
 )
 
 func DBexists(path string) bool {
@@ -41,6 +44,9 @@ func Init() {
 		if _, err := txn.Get([]byte("initSuccess")); err == badger.ErrKeyNotFound { //database has not been created yet
 			err = txn.Set([]byte("initSuccess"), []byte("true"))
 			fmt.Println("database created.")
+			Handle(err)
+
+			err = txn.Set([]byte("ProductionNum"), []byte("1"))
 			return err
 		}
 		return err
@@ -83,6 +89,54 @@ func InitSuccess() bool {
 	} else {
 		return false
 	}
+
+}
+
+func ProductionNum() int {
+	opts := badger.DefaultOptions(DBpath)
+	db, err := badger.Open(opts)
+	Handle(err)
+	defer db.Close()
+
+	err = db.View(func(txn *badger.Txn) error {
+		item, err := txn.Get([]byte("ProductionNum"))
+		Handle(err)
+		err = item.Value(func(val []byte) error {
+			productionNum = append([]byte{}, val...)
+			return err
+		})
+
+		return nil
+	})
+	Handle(err)
+
+	switch string(productionNum) {
+	case "1":
+		prodNum = 1
+	case "2":
+		prodNum = 2
+	case "3":
+		prodNum = 3
+	}
+
+	return prodNum
+
+}
+
+func SetProductionNum(num int) {
+	opts := badger.DefaultOptions(DBpath)
+	db, err := badger.Open(opts)
+	Handle(err)
+	defer db.Close()
+
+	err = db.Update(func(txn *badger.Txn) error {
+		err := txn.Delete([]byte("ProductionNum"))
+		Handle(err)
+		
+		err = txn.Set([]byte("ProductionNum"), []byte(strconv.Itoa(num)))
+		return err
+	})
+	Handle(err)
 
 }
 

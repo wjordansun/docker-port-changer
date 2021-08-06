@@ -1,11 +1,9 @@
 package packet
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"portchanger/badgerstuff"
 	"portchanger/docker"
 	"portchanger/ipfs"
 	"strings"
@@ -77,18 +75,19 @@ func Listen() {
     //     log.Fatal(err)
     // }
     // fmt.Println("Only capturing TCP port 8080 packets.")
-		reader := bufio.NewReader(os.Stdin)
+		
+		//reader := bufio.NewReader(os.Stdin)
 		
     packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 
-		Loop:
+		//Loop:
     	for packet := range packetSource.Packets() {
-				cmdString, err := reader.ReadString('\n')
-				commandStr := strings.TrimSuffix(cmdString, "\n")
-				badgerstuff.Handle(err)
-				if commandStr == "q" {
-					break Loop
-				}
+				// cmdString, err := reader.ReadString('\n')
+				// commandStr := strings.TrimSuffix(cmdString, "\n")
+				// badgerstuff.Handle(err)
+				// if commandStr == "q" {
+				// 	break Loop
+				// }
 
 				pac := packet.String()
 				//fmt.Println(packet)

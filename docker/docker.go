@@ -41,7 +41,6 @@ func StopAll() {
 	Stop("honeypot1")
 	Stop("honeypot2")
 	Stop("honeypot3")
-	Stop("honeypot")
 	//fmt.Println("Im being run.")
 
 }
@@ -124,6 +123,5 @@ func Reset() {
 
 	time.Sleep(2 * time.Second)
 	Start("production1")
-	Start("honeypot")
 	fmt.Println("Reset complete.")
 }

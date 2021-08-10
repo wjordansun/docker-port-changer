@@ -82,7 +82,7 @@ MongoClient.connect("mongodb://127.0.0.1:27017", {useUnifiedTopology: true})
       res.redirect('/');
     });
     
-    app.listen(3000, function() {
+    app.listen(9999, function() {
         console.log('listening on 9999')
     });
 

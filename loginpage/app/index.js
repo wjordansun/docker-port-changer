@@ -6,7 +6,7 @@ const MongoClient = mongo.MongoClient;
 
 app.use(express.static('./'))
 
-MongoClient.connect("mongodb://9e23190ebe37:27017", {useUnifiedTopology: true})
+MongoClient.connect("mongodb://172.17.0.3:27017", {useUnifiedTopology: true})
   .then(client => {
     let loggedIn = false;
     console.log("Connected to database");

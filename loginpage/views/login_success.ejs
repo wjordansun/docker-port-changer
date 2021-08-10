@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="global.css">
+</head>
+<body class="loginbackground">
+    <div>
+      <div>
+        <form action="/loggedIn" method="POST">
+                <div>
+                    <button class="logout" type="submit">Logout</button>
+                </div>
+        </form>
+      </div>
+      <div class="title">
+            <h1>Login successful!</h1>
+      </div>
+      <div class="category">
+        <div>Name</div>
+        <div>Address</div>
+        <div>Age</div>
+        <div>Eye</div>
+        <div>Percentage</div>
+        <div>Enrolled</div>
+        <div>Friends</div>
+      </div>
+      <ul>
+		  <!-- Loop through info -->
+	    	<% for(var i = 0; i < info.length; i++) {%>
+			    <li>
+            <div class="info">
+			    	<span><%= info[i].first_name %></span>
+            <span><%= info[i].last_name %></span> 
+            <span><%= info[i].address.house_number %></span>
+            <span><%= info[i].address.street %></span>
+            <span><%= info[i].address.city %></span>
+            <span><%= info[i].address.state %></span>
+            <span><%= info[i].age %></span>
+            <span><%= info[i].eye_color %></span>
+            <span><%= info[i].percentage %></span>
+            <span><%= info[i].enrolled %></span>
+            <span><%= info[i].friends %></span>
+            </div>
+          </li>
+	    	<% } %>
+      </ul>
+    </div>
+</body>
+</html>

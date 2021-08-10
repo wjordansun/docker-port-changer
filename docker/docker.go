@@ -70,7 +70,7 @@ func Build(imageName string) {
 }
 
 func Run(containerName, imageName string, port int) {
-	cmd := exec.Command("docker", "run", "-d", "--name", containerName, "-p", strconv.Itoa(port) + ":9999", imageName)
+	cmd := exec.Command("docker", "run", "-d", "-it", "--name", containerName, "-p", strconv.Itoa(port) + ":9999", imageName)
   stdout, err := cmd.Output()
 
 	if err != nil {

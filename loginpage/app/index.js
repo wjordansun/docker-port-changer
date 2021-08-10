@@ -25,7 +25,7 @@ MongoClient.connect("mongodb://127.0.0.1:27017", {useUnifiedTopology: true})
 
     app.get('/', (req, res) => {
         loggedIn = false;
-        res.render('/index.ejs');
+        res.render('/index.html');
     });
     
     app.get('/loggedIn', (req, res) => {

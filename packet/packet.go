@@ -108,6 +108,7 @@ func Listen() {
          	 		docker.Start("honeypot1")
 							docker.Start("production2")
 							badgerstuff.SetProductionNum(2)
+							time.Sleep(2 * time.Second)
 							os.Exit(0)
 						}
 					case 2:

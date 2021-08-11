@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"os"
 	"portchanger/bannerusage"
 	"portchanger/docker"
@@ -26,8 +27,10 @@ func RunCommand(commandStr string) {
 	case "reset":
 		docker.Reset()
 	case "exit":
+		fmt.Println("bye bye")
 		os.Exit(0)
 	case "quit":
+		fmt.Println("bye bye")
 		os.Exit(0)
 	}
 	// cmd := exec.Command(arrCommandStr[0], arrCommandStr[1:]...)

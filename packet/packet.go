@@ -104,9 +104,12 @@ func Listen() {
          	 		docker.Start("honeypot1")
 							docker.Start("production2")
 						} else {
+							time.Sleep(2 * time.Second)
 							docker.Stop("mongodb")
 							docker.Start("mongodb1")
 							docker.Start("mongodbh")
+
+							time.Sleep(2 * time.Second)
 
 							docker.Stop("production1")
          	 		docker.Start("honeypot1")

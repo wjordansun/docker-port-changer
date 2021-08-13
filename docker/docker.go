@@ -41,6 +41,8 @@ func StopAll() {
 	Stop("honeypot1")
 	Stop("honeypot2")
 	Stop("honeypot3")
+	Stop("mongodb1")
+	Stop("mongodbh")
 	//fmt.Println("Im being run.")
 
 }
@@ -120,7 +122,7 @@ func Reset() {
 	StopAll()
 
 	//fmt.Println("Im being run.")
-
+	Start("mongodb")
 	time.Sleep(2 * time.Second)
 	Start("production1")
 	badgerstuff.SetProductionNum(1)

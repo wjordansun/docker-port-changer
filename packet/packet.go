@@ -7,6 +7,7 @@ import (
 	"portchanger/badgerstuff"
 	"portchanger/docker"
 	"portchanger/ipfs"
+	"portchanger/ports"
 	"strings"
 	"time"
 
@@ -116,6 +117,8 @@ func Listen() {
 							docker.Start("production2")
 							badgerstuff.SetProductionNum(2)
 							
+							ports.Display()
+
 							time.Sleep(2 * time.Second)
 							os.Exit(0)
 						}

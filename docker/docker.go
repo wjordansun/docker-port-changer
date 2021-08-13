@@ -86,25 +86,25 @@ func Init() {
 		fmt.Println("already initialized.")
 		return
 	} else {
-		Run("honeypot", "app", 4000)
+		Run("honeypot", "honeyapp", 4000)
 		Stop("honeypot")
 
 		Run("production1", "app", 3000)
 		Stop("production1")
 
-		Run("production2", "app", 3010)
+		Run("production2", "app1", 3010)
 		Stop("production2")
 
 		Run("production3", "app", 3020)
 		Stop("production3")
 
-		Run("honeypot1", "app", 3000)
+		Run("honeypot1", "honeyapp", 3000)
 		Stop("honeypot1")
 
-		Run("honeypot2", "app", 3010)
+		Run("honeypot2", "honeyapp", 3010)
 		Stop("honeypot2")
 
-		Run("honeypot3", "app", 3020)
+		Run("honeypot3", "honeyapp", 3020)
 		Stop("honeypot3")
 
 		Start("honeypot")
